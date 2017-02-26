@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['getattractiveness',['getAttractiveness',['../class_boy.html#a814ef4919f2ac86c6ee70f9698afad3d',1,'Boy::getAttractiveness()'],['../class_girl.html#a04cfe3e0c21240f92c19152630a40252',1,'Girl::getAttractiveness()']]],
+  ['getboychoice',['getBoyChoice',['../class_girl.html#a23ed372fae6fc44694d5ffa39fa455cb',1,'Girl']]],
+  ['getboyname',['getBoyName',['../class_couple.html#a9e0bcd12b5436edd4546bfb0f3a43e73',1,'Couple']]],
+  ['getbudget',['getBudget',['../class_boy.html#a05c48b12091ebcad44ba86ba88514ac5',1,'Boy']]],
+  ['getcouplecompatibility',['getCoupleCompatibility',['../class_couple.html#a9b73843688fdaf6af8bef3c944f0143d',1,'Couple']]],
+  ['getcouplehappiness',['getCoupleHappiness',['../class_couple.html#a8a93de9d5d49ef45761ed98e89628a48',1,'Couple']]],
+  ['getgirlname',['getGirlName',['../class_couple.html#a6a90d0e4ce7652962ba9bbf41f7a1392',1,'Couple']]],
+  ['gethappiness',['getHappiness',['../class_boy.html#a7ab7e61631b30e7f679ba204f3b2616d',1,'Boy::getHappiness()'],['../class_girl.html#adf0956456e02324db90c009c0c3c47d3',1,'Girl::getHappiness()']]],
+  ['getintelligencelevel',['getIntelligenceLevel',['../class_girl.html#a8b9ea4f67c0e682f65fb683f1c1ee766',1,'Girl']]],
+  ['getluxurydifficultytoobtain',['getLuxuryDifficultyToObtain',['../class_gift.html#aa7315f0e639d60a32c53eaaacddba937',1,'Gift']]],
+  ['getluxuryrating',['getLuxuryRating',['../class_gift.html#a13f625f3bf17ea98bdc61c0f824b77a4',1,'Gift']]],
+  ['getmaintenancecost',['getMaintenanceCost',['../class_girl.html#a8fa9751cb04f9c510a635c9f19a1d4d9',1,'Girl']]],
+  ['getminattraction',['getMinAttraction',['../class_boy.html#a35d84533352a88f6365a28ba21b9f993',1,'Boy']]],
+  ['getname',['getName',['../class_boy.html#acf59fd0074a6ea3413751a95b2970303',1,'Boy::getName()'],['../class_girl.html#a27a705fb94b92dfd6929d0bf4bcaf5e1',1,'Girl::getName()']]],
+  ['getpartner',['getPartner',['../class_boy.html#ae7faa071153b463f2a7424650b1f6db3',1,'Boy::getPartner()'],['../class_girl.html#a532906e2a807138de027b2a822e91abd',1,'Girl::getPartner()']]],
+  ['getprice',['getPrice',['../class_gift.html#aa114ca9629b5f02e4df6731d33c69373',1,'Gift']]],
+  ['gettype',['getType',['../class_boy.html#a65dcb5946aa7d736f15d7ca8d892dab7',1,'Boy::getType()'],['../class_gift.html#a999437028eda2a5aac1f3ad1c3f22cf9',1,'Gift::getType()'],['../class_girl.html#acd2e75d7212ce1223945c6befff293b8',1,'Girl::getType()']]],
+  ['getutilityclass',['getUtilityClass',['../class_gift.html#a16a1e01228fcd6de8fd4b607a854d2b7',1,'Gift']]],
+  ['getutilityvalue',['getUtilityValue',['../class_gift.html#a109b572cc26b20b8b745b959afae678e',1,'Gift']]],
+  ['getvalue',['getValue',['../class_gift.html#aabddc4d671de70d9002461076999a574',1,'Gift']]],
+  ['gift',['Gift',['../class_gift.html#a3518b10b5b491f98a56e0b7d27736783',1,'Gift::Gift(int price, int value)'],['../class_gift.html#a95ed6819ae16875595be9a0100f060de',1,'Gift::Gift(int price, int value, int luxuryRating, int luxuryDifficultyToObtain)'],['../class_gift.html#a5f3dd07ba0552c716f3abc55d521e063',1,'Gift::Gift(int price, int value, int utilityValue, long utilityClass)']]],
+  ['girl',['Girl',['../class_girl.html#a1a8fcd5a2b2d09ad68b8d987a42820fa',1,'Girl']]]
+];
