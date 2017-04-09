@@ -9,6 +9,7 @@ int main()
     getBoysList(B);
     getGirlsList(G);
     getCouplesList(C);
+    cout << C.size() << endl << B.size() << endl << G.size() << endl;
     int t;
     cout << "\nEnter t to perform breakups where happiness less than t: ";
     cin >> t;
