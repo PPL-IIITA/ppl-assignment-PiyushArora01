@@ -447,7 +447,7 @@ void performBreakup(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C, int k)
             b2 = B.begin();
         }
         while(b2 < B.end()) {
-            if((b2->getBudget() >= g->getMaintenanceCost()) && (b2->getMinAttraction() <= g->getAttractiveness()) && (!(b2->isCommitted()))) {
+            if((b2->getBudget() >= g->getMaintenanceCost()) && (b2->getMinAttraction() <= g->getAttractiveness()) && (!(b2->isCommitted())) && b2 != b) {
                 b2->setCommitted(1);
                 g->setCommitted(1);
                 bI = b2->getIndex();
