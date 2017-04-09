@@ -4,6 +4,8 @@
 #include <fstream>
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 #include "Person.cpp"
 #include "Boy.cpp"
 #include "Girl.cpp"

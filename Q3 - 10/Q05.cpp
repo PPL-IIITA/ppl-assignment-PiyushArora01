@@ -1,4 +1,5 @@
 #include "Includes.cpp"
+#include "Q05Utility.cpp"
 
 int main()
 {
@@ -13,7 +14,7 @@ int main()
     getEGiftList(EG);
     getLGiftList(LG);
     getUGiftList(UG);
-    makeCouples(B, G, C);
+    makeNewCouples(B, G, C);
     computeGifts(B, G, C, EG, LG, UG);
     writeEGiftsToFile(EG);
     writeLGiftsToFile(LG);
@@ -21,14 +22,13 @@ int main()
     computeCoupleHappiness(B, G, C);
     computeCoupleCompatibility(B, G, C);
     int k;
-    cout << "\nEnter k to get k happiest and k most compatible couples: ";
+    cout << "\nEnter k to get k happiest couples: ";
     cin >> k;
     while(k > C.size()) {
         cout << "k too large. Max Number of Couples is: " << C.size() << endl << "Enter k: ";
         cin >> k;
     }
-    getKHappiestCouples(C, k);
-    getKMostCompatibleCouples(C, k);
-    cout << "\nSuccessfully written to file!\n\nFile Location CSV/Q03_*.csv\n" << endl;
+    getKNHappiestCouples(C, k);
+    cout << "\nSuccessfully written to file!\n\nFile Location CSV/Q05_Happiest.csv\n" << endl;
     return 0;
 }

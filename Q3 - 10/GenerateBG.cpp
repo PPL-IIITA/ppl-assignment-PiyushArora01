@@ -17,6 +17,9 @@ int main()
     /*!
     Generate Boy details
     !*/
+    output.open("CSV/CoupleList.csv");
+    output << "";
+    output.close();
     {
         string name;
         int attractiveness;

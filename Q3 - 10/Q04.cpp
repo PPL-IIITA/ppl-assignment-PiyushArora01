@@ -17,4 +17,5 @@ int main()
     }
     performBreakup(B, G, C, k);
     return 0;
+    cout << "\nLog files updated successfully!\n";
 }
