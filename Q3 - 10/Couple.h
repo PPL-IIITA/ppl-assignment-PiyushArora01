@@ -16,6 +16,8 @@ public:
     int getTotalMoneySpent();
     int getTotalValueGift();
     int getTotalLuxValue();
+    void setBoy(int boy);
+    void setGirl(int girl);
     void setBoyHappiness(double boyHappiness);
     void setGirlHappiness(double girlHappiness);
     void setCoupleHappiness(double coupleHappiness);

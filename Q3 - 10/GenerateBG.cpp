@@ -24,6 +24,7 @@ int main()
         int intelligenceLevel;
         int type;
         int minAttraction;
+        bool committed;
         input.open("Names/BoyNames.txt");
         output.open("CSV/BoyList.csv");
         for(i = 0; i < n; i++) {
@@ -33,7 +34,7 @@ int main()
             minAttraction = rand()%100 + 1;
             type = rand()%3;
             budget = rand()%5000 + 10000;
-            output << i << " , " << name << " , " << attractiveness << " , " << intelligenceLevel << " , " << type << " , " << budget << " , " << minAttraction << endl;
+            output << i << " , " << name << " , " << attractiveness << " , " << intelligenceLevel << " , " << type << " , " << budget << " , " << minAttraction << " , " << committed << endl;
         }
         input.close();
         output.close();
@@ -49,6 +50,7 @@ int main()
         int intelligenceLevel;
         int type;
         int boyChoice;
+        bool committed;
         input.open("Names/GirlNames.txt");
         output.open("CSV/GirlList.csv");
         for(i = 0; i < n; i++) {
@@ -58,7 +60,7 @@ int main()
             type = rand()%3;
             boyChoice = rand()%3;
             maintenanceCost = rand()%5000 + 10000;
-            output << i << " , " << name << " , " << attractiveness << " , " << intelligenceLevel << " , " << type << " , " << maintenanceCost << " , " << boyChoice << endl;
+            output << i << " , " << name << " , " << attractiveness << " , " << intelligenceLevel << " , " << type << " , " << maintenanceCost << " , " << boyChoice << " , " << committed << endl;
         }
         input.close();
         output.close();

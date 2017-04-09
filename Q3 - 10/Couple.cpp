@@ -83,6 +83,16 @@ int Couple::getTotalLuxValue()
     return this->totalLuxValue;
 }
 
+void Couple::setBoy(int boy)
+{
+    this->boy = boy;
+}
+
+void Couple::setGirl(int girl)
+{
+    this->girl = girl;
+}
+
 void Couple::setBoyHappiness(double boyHappiness)
 {
     this->boyHappiness = boyHappiness;

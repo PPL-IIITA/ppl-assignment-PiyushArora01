@@ -67,7 +67,9 @@ void makeCouples(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
                 b++;
         }
     }
-    writeCouplesToFile(C);    
+    writeCouplesToFile(C);
+    writeBoysToFile(B);
+    writeGirlsToFile(G);  
 }
 
 bool sortGiftByPrice(Gift &a, Gift &b)
@@ -285,6 +287,8 @@ void computeBoyHappiness(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
         }
         if(isnan(temp))
             temp = 0;
+        if(isinf(temp))
+            temp = 1.79769e+308;
         c->setBoyHappiness(temp);
     }
     writeCouplesToFile(C);
@@ -312,6 +316,8 @@ void computeGirlHappiness(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
         }
         if(isnan(temp))
             temp = 0;
+        if(isinf(temp))
+            temp = 1.79769e+308;
         c->setGirlHappiness(temp);
     }
     writeCouplesToFile(C);
@@ -323,8 +329,13 @@ void computeCoupleHappiness(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
     computeGirlHappiness(B, G, C);
     computeBoyHappiness(B, G, C);
     vector<Couple>::iterator c = C.begin();
-    for(c = C.begin(); c != C.end(); c++)
-        c->setCoupleHappiness(c->getBoyHappiness() + c->getGirlHappiness());
+    double temp;
+    for(c = C.begin(); c != C.end(); c++) {
+        temp = c->getBoyHappiness() + c->getGirlHappiness();
+        if(isinf(temp))
+            temp = 1.79769e+308;
+        c->setCoupleHappiness(temp);
+    }
     writeCouplesToFile(C);
 }
 
@@ -348,6 +359,7 @@ void computeCoupleCompatibility(vector<Boy> &B, vector<Girl> &G, vector<Couple> 
         temp = diff1 + diff2 + diff3;
         c->setCoupleCompatibility(temp);
     }
+    writeCouplesToFile(C);
 }
 
 bool sortByCompatibility(Couple &c1, Couple &c2)
@@ -358,6 +370,11 @@ bool sortByCompatibility(Couple &c1, Couple &c2)
 bool sortByHappiness(Couple &c1, Couple &c2)
 {
     return c1.getCoupleHappiness() > c2.getCoupleHappiness();
+}
+
+bool sortByLHappiness(Couple &c1, Couple &c2)
+{
+    return c1.getCoupleHappiness() < c2.getCoupleHappiness();
 }
 
 void getKHappiestCouples(vector<Couple> &C, int k)
@@ -393,4 +410,77 @@ void getKMostCompatibleCouples(vector<Couple> &C, int k)
         cout << "\t" << it->getIndex() << "\t" << it->getCoupleCompatibility() << endl;
         output << it->getIndex() << " , " << it->getCoupleCompatibility() << endl;
     }
+}
+
+
+void performBreakup(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C, int k)
+{
+    sortAllByIndex(B, G, C);
+    //cout << C.size() << endl;
+    int i = 0;
+    vector<Boy>::iterator b;
+    vector<Boy>::iterator b2;
+    vector<Girl>::iterator g;
+    vector<Couple>::iterator c;
+    int bI, gI;
+    int type;
+    int cIndex = 0;
+    //cout << C.size() << endl;
+    //cout << "Start\n";
+    sort(C.begin(), C.end(), sortByLHappiness);
+    for(c = C.begin(); c != C.end(), i < k; c++, i++) {
+        b = B.begin() + c->getBoy();
+        g = G.begin() + c->getGirl();
+        //cout << c->getIndex() << " bInd: " << c->getBoy() << " gInd: " << c->getGirl() << endl; 
+        //cout << c->getIndex() << " boy: " << b->getIndex() << " girl " << g->getIndex() << endl;
+        cIndex = c->getIndex();
+        type = g->getBoyChoice();
+        g->setCommitted(0);
+        if(type == 0) {
+            sort(B.begin(), B.end(), sortMostAttractive);
+            b2 = B.begin();
+        } else if(type == 1) {
+            sort(B.begin(), B.end(), sortMostRich);
+            b2 = B.begin();
+        } else if(type == 2) {
+            sort(B.begin(), B.end(), sortMostIntelligent);
+            b2 = B.begin();
+        }
+        while(b2 < B.end()) {
+            if((b2->getBudget() >= g->getMaintenanceCost()) && (b2->getMinAttraction() <= g->getAttractiveness()) && (!(b2->isCommitted()))) {
+                b2->setCommitted(1);
+                g->setCommitted(1);
+                bI = b2->getIndex();
+                gI = g->getIndex();
+                c->setBoy(bI);
+                c->setBoyHappiness(0);
+                c->setGirlHappiness(0);
+                c->setCoupleHappiness(0);
+                c->setCoupleCompatibility(0);
+                c->setTotalMoneySpent(0);
+                c->setTotalValueGift(0);
+                c->setTotalLuxValue(0);
+                break;
+            }
+            else
+                b2++;
+        }
+        cout << "Breakup between boy: " << b->getIndex() << " and girl: " << g->getIndex() << ", new relation with boy: " << b2->getIndex() << endl;
+        b->setCommitted(0);
+    }
+    writeCouplesToFile(C);
+    writeBoysToFile(B);
+    writeGirlsToFile(G);
+    vector<EssentialGift> EG;
+    vector<LuxuryGift> LG;
+    vector<UtilityGift> UG;
+    getEGiftList(EG);
+    getLGiftList(LG);
+    getUGiftList(UG);
+    computeGifts(B, G, C, EG, LG, UG);
+    writeEGiftsToFile(EG);
+    writeLGiftsToFile(LG);
+    writeUGiftsToFile(UG);
+    computeCoupleHappiness(B, G, C);
+    computeCoupleCompatibility(B, G, C);
 }
