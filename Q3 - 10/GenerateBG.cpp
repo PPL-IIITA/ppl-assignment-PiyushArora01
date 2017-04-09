@@ -84,7 +84,7 @@ int main()
         }
         output.close();
         output.open("CSV/LuxuryGift.csv");
-        for(i = 0; i < 1000; i++) {
+        for(i = 0; i < 2000; i++) {
             price = rand()%3000 + 4000;
             value = rand()%2 + 8;
             luxuryRating = rand()%5 + 1;
@@ -98,7 +98,7 @@ int main()
             value = rand()%8 + 1;
             utilityValue = rand()%5 + 1;
             utilityClass = rand()%5 + 1;
-            output << i+6000 << " , " << price << " , " << value << " , " << utilityValue << " , " << utilityClass << " , " << taken << endl;
+            output << i+7000 << " , " << price << " , " << value << " , " << utilityValue << " , " << utilityClass << " , " << taken << endl;
         }
         output.close();
     }

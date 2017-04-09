@@ -6,7 +6,7 @@
 class LuxuryGift : public Gift
 {
 public:
-    LuxuryGift(int price, int value, bool taken, int luxuryRating, int luxuryDifficultyToObtain);
+    LuxuryGift(int index, int price, int value, bool taken, int luxuryRating, int luxuryDifficultyToObtain);
     int getLuxuryRating();
     int getLuxuryDifficultyToObtain();
     void setLuxuryRating(int luxuryRating);

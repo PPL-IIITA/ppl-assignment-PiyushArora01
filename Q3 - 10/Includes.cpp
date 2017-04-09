@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <cmath>
 #include "Person.cpp"
 #include "Boy.cpp"
 #include "Girl.cpp"

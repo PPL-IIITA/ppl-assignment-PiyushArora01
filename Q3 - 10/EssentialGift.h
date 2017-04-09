@@ -6,7 +6,7 @@
 class EssentialGift : public Gift
 {
 public:
-    EssentialGift(int price, int value, bool taken);
+    EssentialGift(int index, int price, int value, bool taken);
 };
 
 #endif

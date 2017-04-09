@@ -1,6 +1,6 @@
 #include "EssentialGift.h"
 
-EssentialGift::EssentialGift(int price, int value, bool taken) : Gift(price, value, taken)
+EssentialGift::EssentialGift(int index, int price, int value, bool taken) : Gift(index, price, value, taken)
 {
     //!Essential Gift constructor
 }

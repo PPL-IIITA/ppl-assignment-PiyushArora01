@@ -1,6 +1,6 @@
 #include "LuxuryGift.h"
 
-LuxuryGift::LuxuryGift(int price, int value, bool taken, int luxuryRating, int luxuryDifficultyToObtain) : Gift(price, value, taken)
+LuxuryGift::LuxuryGift(int index, int price, int value, bool taken, int luxuryRating, int luxuryDifficultyToObtain) : Gift(index, price, value, taken)
 {
     //!Luxury Gift constructor
     this->luxuryRating = luxuryRating;

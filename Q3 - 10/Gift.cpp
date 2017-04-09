@@ -1,11 +1,17 @@
 #include "Gift.h"
 
-Gift::Gift(int price, int value, bool taken)
+Gift::Gift(int index, int price, int value, bool taken)
 {
     //!Create Gift
+    this->index = index;
     this->price = price;
     this->value = value;
     this->taken = taken;
+}
+
+int Gift::getIndex()
+{
+    return this->index;
 }
 
 int Gift::getPrice()

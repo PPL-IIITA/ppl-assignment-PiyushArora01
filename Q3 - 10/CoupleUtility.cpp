@@ -66,91 +66,331 @@ void makeCouples(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
             else
                 b++;
         }
-        
     }
+    writeCouplesToFile(C);    
 }
-/*
-void Couple::computeBoyHappiness()
+
+bool sortGiftByPrice(Gift &a, Gift &b)
+{
+    return a.getPrice() < b.getPrice();
+}
+
+bool sortPersonByIndex(Person &p1, Person &p2)
+{
+    return p1.getIndex() < p2.getIndex();
+}
+
+bool sortCoupleByIndex(Couple &c1, Couple &c2)
+{
+    return c1.getIndex() < c2.getIndex();
+}
+
+void sortAllByIndex(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
+{
+    sort(B.begin(), B.end(), sortPersonByIndex);
+    sort(G.begin(), G.end(), sortPersonByIndex);
+    sort(C.begin(), C.end(), sortCoupleByIndex);
+}
+
+void computeGifts(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C, vector<EssentialGift> &EG, vector<LuxuryGift> LG, vector<UtilityGift> UG)
+{
+    ofstream output;
+    output.open("CSV/GiftExchangeLog.csv");
+    output << "Couple Index , Gift Index" << endl;
+    sort(EG.begin(), EG.end(), sortGiftByPrice);
+    sort(LG.begin(), LG.end(), sortGiftByPrice);
+    sort(UG.begin(), UG.end(), sortGiftByPrice);
+    sortAllByIndex(B, G, C);
+    vector<Boy>::iterator b = B.begin();
+    vector<Girl>::iterator g = G.begin();
+    vector<Couple>::iterator it = C.begin();
+    vector<EssentialGift>::iterator eg = EG.begin();
+    vector<LuxuryGift>::iterator lg = LG.begin();
+    vector<UtilityGift>::iterator ug = UG.begin();
+    int type, budget, maintenanceCost, cost = 0;
+    int totalMoneySpent, totalValueGift, totalLuxValue;
+    //cout << G.size() << " " << B.size() << " " << C.size() << " " << EG.size() << " " << LG.size() << " " << UG.size() << endl;;
+    for(it = C.begin(); it < C.end(); it++) {
+        totalMoneySpent = 0;
+        totalValueGift = 0;
+        totalLuxValue = 0;
+        cost = 0;
+        eg = EG.begin();
+        lg = LG.begin();
+        ug = UG.begin();
+        b = B.begin() + (it->getBoy());
+        g = G.begin() + (it->getGirl());
+        type = b->getType();
+        budget = b->getBudget();
+        maintenanceCost = g->getMaintenanceCost();
+        //cout << b->getIndex() << " " << g->getIndex() << " " << type << " " << budget << " " << maintenanceCost << " " << it->getBoy() << " " << it->getGirl() << endl;
+        /*
+        GEEKS
+        */
+        if(type == 2) {
+            while(lg->isTaken() == 1 && lg < LG.end()) {
+                lg++;       //!Since lux gifts are unique
+            }
+            while(lg->getPrice() > maintenanceCost && lg < LG.end())
+                lg++;
+            if(lg->getPrice() < budget && lg < LG.end()) {
+                cost += lg->getPrice();
+                maintenanceCost -= lg->getPrice();
+                totalMoneySpent += lg->getPrice();
+                totalValueGift += lg->getValue();
+                totalLuxValue += lg->getValue();
+                lg->setTaken(1);
+                output << it->getIndex() << " , " << lg->getIndex() << endl;
+            }
+            while((eg->getPrice() < maintenanceCost && eg < EG.end()) || (ug->getPrice() < maintenanceCost && ug < UG.end())) {
+                if(eg->getPrice() < maintenanceCost && eg < EG.end()) {
+                    cost += eg->getPrice();
+                    output << it->getIndex() << " , " << eg->getIndex() << endl;
+                    maintenanceCost -= eg->getPrice();
+                    totalMoneySpent += eg->getPrice();
+                    totalValueGift += eg->getValue();                    
+                    eg++;
+                }
+                if(ug->getPrice() < maintenanceCost && ug < UG.end()) {
+                    cost += ug->getPrice();
+                    output << it->getIndex() << " , " << ug->getIndex() << endl;
+                    maintenanceCost -= ug->getPrice();
+                    totalMoneySpent += ug->getPrice();
+                    totalValueGift += ug->getValue();                    
+                    ug++;
+                }
+            }
+        } else if(type == 1) {
+        /*
+        GENEROUS
+        */
+            while((eg->getPrice() < budget && eg < EG.end()) || (ug->getPrice() < budget && ug < UG.end()) || (lg->getPrice() < budget && lg < LG.end())) {
+                while(lg->isTaken() && lg < LG.end()) {
+                    lg++;
+                }
+                if(lg->getPrice() < budget && lg < LG.end()) {
+                        cost += lg->getPrice();
+                        output << it->getIndex() << " , " << lg->getIndex() << endl;
+                        lg->setTaken(1);
+                        budget -= lg->getPrice();
+                        totalMoneySpent += lg->getPrice();
+                        totalValueGift += lg->getValue();
+                        totalLuxValue += lg->getValue();
+                        lg++;
+                }
+                
+                if(eg->getPrice() < budget && eg < EG.end()) {
+                    cost += eg->getPrice();
+                    output << it->getIndex() << " , " << eg->getIndex() << endl;
+                    budget -= eg->getPrice();
+                    totalMoneySpent += eg->getPrice();
+                    totalValueGift += eg->getValue();
+                    eg++;
+                }
+                if(ug->getPrice() < budget && ug < UG.end()) {
+                    cost += ug->getPrice();
+                    output << it->getIndex() << " , " << ug->getIndex() << endl;
+                    budget -= ug->getPrice();
+                    totalMoneySpent += ug->getPrice();
+                    totalValueGift += ug->getValue();
+                    ug++;
+                }
+            }
+            if(eg->getPrice() < budget && eg < EG.end()) {
+                cost += eg->getPrice();
+                output << it->getIndex() << " , " << eg->getIndex() << endl;
+                totalMoneySpent += eg->getPrice();
+                totalValueGift += eg->getValue();
+                budget -= eg->getPrice();
+            } else if(ug->getPrice() < budget && ug < UG.end()) {
+                cost += ug->getPrice();
+                output << it->getIndex() << " , " << ug->getIndex() << endl;
+                totalMoneySpent += ug->getPrice();
+                totalValueGift += ug->getValue();
+                budget -= ug->getPrice();
+            }
+        } else if(type == 0) {
+            while((eg->getPrice() < maintenanceCost && eg < EG.end()) || (ug->getPrice() < maintenanceCost && ug < UG.end()) || (lg->getPrice() < maintenanceCost && lg < LG.end())) {
+                while(lg->isTaken() && lg < LG.end()) {
+                    lg++;
+                }
+                if(lg->getPrice() < maintenanceCost && lg < LG.end()) {
+                    cost += lg->getPrice();
+                    output << it->getIndex() << " , " << lg->getIndex() << endl;
+                    lg->setTaken(1);
+                    maintenanceCost -= lg->getPrice();
+                    totalMoneySpent += lg->getPrice();
+                    totalValueGift += lg->getValue();
+                    totalLuxValue += lg->getValue();
+                    lg++;
+                }
+                if(eg->getPrice() < maintenanceCost && eg < EG.end()) {
+                    cost += eg->getPrice();
+                    output << it->getIndex() << " , " << eg->getIndex() << endl;
+                    maintenanceCost -= eg->getPrice();
+                    totalMoneySpent += eg->getPrice();
+                    totalValueGift += eg->getValue();
+                    eg++;
+                }
+                if(ug->getPrice() < maintenanceCost && ug < UG.end()) {
+                    cost += ug->getPrice();
+                    output << it->getIndex() << " , " << ug->getIndex() << endl;
+                    maintenanceCost -= ug->getPrice();
+                    totalMoneySpent += ug->getPrice();
+                    totalValueGift += ug->getValue();
+                    ug++;
+                }
+            }
+            if(eg->getPrice() < (budget - cost) && eg < EG.end()) {
+                cost += eg->getPrice();
+                output << it->getIndex() << " , " << eg->getIndex() << endl;
+                totalMoneySpent += eg->getPrice();
+                totalValueGift += eg->getValue();
+                maintenanceCost -= eg->getPrice();
+            } else if(ug->getPrice() < (budget - cost) && ug < UG.end()) {
+                cost += ug->getPrice();
+                output << it->getIndex() << " , " << ug->getIndex() << endl;
+                totalMoneySpent += ug->getPrice();
+                totalValueGift += ug->getValue();
+                maintenanceCost -= ug->getPrice();
+            }
+        }
+        it->setTotalMoneySpent(totalMoneySpent);
+        it->setTotalValueGift(totalValueGift);
+        it->setTotalLuxValue(totalLuxValue);
+     }
+     writeCouplesToFile(C);
+}
+
+
+void computeBoyHappiness(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
 {
     //! Compute boy's happiness
+    sortAllByIndex(B, G, C);
+    vector<Boy>::iterator b =  B.begin();
+    vector<Girl>::iterator g = G.begin();
+    vector<Couple>::iterator c = C.begin();
     double temp = 0;
-    int type = this->boy->getType();
-    if(type == 0) {
-        temp = this->boy->getBudget() - this->totalMoneySpent;
-    } else if(type == 1) {
-        temp = this->girl->getHappiness();
-    } else if(type == 2) {
-        temp = this->girl->getIntelligenceLevel();
+    int type;
+    for(c = C.begin(); c != C.end(); c++) {
+        b = B.begin() + c->getBoy();
+        g= G.begin() + c->getGirl();
+        type = b->getType();
+        if(type == 0) {
+            temp = b->getBudget() - c->getTotalMoneySpent();
+        } else if(type == 1) {
+            temp = c->getGirlHappiness();
+        } else if(type == 2) {
+            temp = g->getIntelligenceLevel();
+        }
+        if(isnan(temp))
+            temp = 0;
+        c->setBoyHappiness(temp);
     }
-    this->boy->setHappiness(temp);
+    writeCouplesToFile(C);
 }
 
-void Couple::computeGirlHappiness()
+void computeGirlHappiness(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
 {
     //! Compute girl's happiness
+    sortAllByIndex(B, G, C);
+    vector<Boy>::iterator b =  B.begin();
+    vector<Girl>::iterator g = G.begin();
+    vector<Couple>::iterator c = C.begin();
     double temp = 0;
-    int type = this->girl->getType();
-    if(type == 0) {
-        temp = log(this->totalMoneySpent - this->girl->getMaintenanceCost()) + this->essentialGiftsVal + this->utilityGiftsVal + 2*this->luxuryGiftsVal;
-    } else if(type == 1) {
-        temp = this->totalMoneySpent + this->totalGiftsValue - this->girl->getMaintenanceCost();
-    } else if(type == 2) {
-        temp = exp(this->totalMoneySpent - this->girl->getMaintenanceCost());
-    }  
-    this->girl->setHappiness(temp);
+    int type;
+    for(c = C.begin(); c != C.end(); c++) {
+        b = B.begin() + c->getBoy();
+        g= G.begin() + c->getGirl();
+        type = g->getType();
+        if(type == 0) {
+            temp = log(c->getTotalMoneySpent() - g->getMaintenanceCost()) + c->getTotalLuxValue();
+        } else if(type == 1) {
+            temp = c->getTotalMoneySpent() + c->getTotalValueGift() - g->getMaintenanceCost();
+        } else if(type == 2) {
+            temp = exp(c->getTotalMoneySpent() - g->getMaintenanceCost());
+        }
+        if(isnan(temp))
+            temp = 0;
+        c->setGirlHappiness(temp);
+    }
+    writeCouplesToFile(C);
 }
 
-double Couple::getCoupleHappiness()
-{
-    //!Compute girl's happiness
-    computeCoupleHappiness();
-    return std::abs(this->happiness);
-}
-
-double Couple::getCoupleCompatibility()
-{
-    //! Compute couple compatibility
-    computeCoupleCompatibility();
-    return std::abs(this->compatibility);
-}
-
-void Couple::computeCoupleHappiness()
+void computeCoupleHappiness(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
 {
     //!Compute couple happiness
-    computeGirlHappiness();
-    computeBoyHappiness();
-    this->happiness = this->boy->getHappiness() + this->girl->getHappiness();
+    computeGirlHappiness(B, G, C);
+    computeBoyHappiness(B, G, C);
+    vector<Couple>::iterator c = C.begin();
+    for(c = C.begin(); c != C.end(); c++)
+        c->setCoupleHappiness(c->getBoyHappiness() + c->getGirlHappiness());
+    writeCouplesToFile(C);
 }
 
-void Couple::computeCoupleCompatibility()
+void computeCoupleCompatibility(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C)
 {
     //!Compute couple compatibility
-    double diff1, diff2, diff3;
-    diff1 = std::abs(this->boy->getBudget() - this->girl->getMaintenanceCost());
-    diff2 = std::abs(this->boy->getAttractiveness() - this->girl->getAttractiveness());
-    diff3 = std::abs(this->boy->getIntelligenceLevel() - this->girl->getIntelligenceLevel());
-    this->compatibility = diff1 + diff2 + diff3;
+    double diff1;
+    double diff2;
+    double diff3;
+    double temp;
+    sortAllByIndex(B, G, C);    
+    vector<Boy>::iterator b =  B.begin();
+    vector<Girl>::iterator g = G.begin();
+    vector<Couple>::iterator c = C.begin();
+    for(c = C.begin(); c != C.end(); c++) {
+        b = B.begin() + c->getBoy();
+        g= G.begin() + c->getGirl();
+        diff1 = std::abs(b->getBudget() - g->getMaintenanceCost());
+        diff2 = std::abs(b->getAttractiveness() - g->getAttractiveness());
+        diff3 = std::abs(b->getIntelligenceLevel() - g->getIntelligenceLevel());
+        temp = diff1 + diff2 + diff3;
+        c->setCoupleCompatibility(temp);
+    }
 }
 
-void Couple::addGift(Gift g)
+bool sortByCompatibility(Couple &c1, Couple &c2)
 {
-    //!Add a gift to the couple
-    this->G.push_back(g);
-    this->totalMoneySpent += g.getPrice();
-    this->totalGifts =  G.size();
-    this->totalGiftsValue += g.getPrice();
-    int type = g.getType();
-    if(type == 0) {
-        this->essentialGifts++;
-        this->essentialGiftsCost += g.getPrice();
-        this->essentialGiftsVal += g.getPrice();
-    } else if(type == 1) {
-        this->luxuryGifts++;
-        this->luxuryGiftsCost += g.getPrice();
-        this->luxuryGiftsVal += g.getPrice();
-    } else if(type == 2) {
-        this->utilityGifts++;
-        this->utilityGiftsCost += g.getPrice();
-        this->utilityGiftsVal += g.getPrice();    
+    return c1.getCoupleCompatibility() > c2.getCoupleCompatibility();
+}
+
+bool sortByHappiness(Couple &c1, Couple &c2)
+{
+    return c1.getCoupleHappiness() > c2.getCoupleHappiness();
+}
+
+void getKHappiestCouples(vector<Couple> &C, int k)
+{
+    //!Get K Happiest Couples
+    ofstream output;
+    vector<Couple>::iterator it;
+    int i = 0;
+    output.open("CSV/Q03_KHappiest.csv");
+    output << "Couple Index , Couple Happiness" << endl;
+    sort(C.begin(), C.end(), sortByHappiness);
+    cout << endl << k << " Happiest: " << endl;
+    cout << "\tIndex | Happiness" << endl;
+    for(it = C.begin(); it != C.end(), i < k; it++, i++) {
+        cout << "\t" << it->getIndex() << "\t" << it->getCoupleHappiness() << endl;
+        output << it->getIndex() << " , " << it->getCoupleHappiness() << endl;
     }
-}*/
+    output.close();
+}
+
+void getKMostCompatibleCouples(vector<Couple> &C, int k)
+{
+    //!Get K Most Compatible Couples
+    ofstream output;
+    vector<Couple>::iterator it;
+    int i = 0;
+    output.open("CSV/Q03_KCompatible.csv");
+    output << "Couple Index , Couple Compatibility" << endl;
+    sort(C.begin(), C.end(), sortByCompatibility);
+    cout << endl << k << " Compatible: " << endl;
+    cout << "\tIndex | Compatibility" << endl;
+    for(it = C.begin(); it != C.end(), i < k; it++, i++) {
+        cout << "\t" << it->getIndex() << "\t" << it->getCoupleCompatibility() << endl;
+        output << it->getIndex() << " , " << it->getCoupleCompatibility() << endl;
+    }
+}

@@ -6,7 +6,7 @@
 class UtilityGift : public Gift
 {
 public:
-    UtilityGift(int price, int value, bool taken, int utilityValue, int utilityClass);
+    UtilityGift(int index, int price, int value, bool taken, int utilityValue, int utilityClass);
     int getUtilityValue();
     int getUtilityClass();
     void setUtilityValue(int utilityValue);

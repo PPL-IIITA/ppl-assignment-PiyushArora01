@@ -80,7 +80,7 @@ void getEGiftList(vector<EssentialGift> &eGifts)
     int i;
     for(i = 0; i < 5000; i++) {
         input >> index  >> temp >> price  >> temp >> value >> temp >> taken;
-        EssentialGift g(price, value, taken);
+        EssentialGift g(index, price, value, taken);
         eGifts.push_back(g);
     }
     input.close();
@@ -100,7 +100,7 @@ void getLGiftList(vector<LuxuryGift> &lGifts)
     int i;
     for(i = 0; i < 1000; i++) {
         input >> index >> temp >> price >> temp >> value >> temp >> luxuryRating >> temp >> luxuryDifficultyToObtain >> temp >> taken;
-        LuxuryGift g(price, value, taken, luxuryRating, luxuryDifficultyToObtain);
+        LuxuryGift g(index, price, value, taken, luxuryRating, luxuryDifficultyToObtain);
         lGifts.push_back(g);
     }
     input.close();
@@ -120,7 +120,7 @@ void getUGiftList(vector<UtilityGift> &uGifts)
     int i;
     for(i = 0; i < 2000; i++) {
         input >> index >> temp >> price >> temp >> value >> temp >> utilityValue >> temp >> utilityClass >> temp >> taken;
-        UtilityGift g(price, value, taken, utilityValue, utilityClass);
+        UtilityGift g(index, price, value, taken, utilityValue, utilityClass);
         uGifts.push_back(g);
     }
     input.close();
@@ -133,31 +133,31 @@ void writeEGiftsToFile(vector<EssentialGift> &eGifts)
     vector<EssentialGift>::iterator it;
     int i = 0;
     for(it = eGifts.begin(); it != eGifts.end(); it++, i++) {
-        output << i << " , " << it->getPrice() << " , " << it->getValue() << " , " << it->isTaken() << endl;
+        output << it->getIndex() << " , " << it->getPrice() << " , " << it->getValue() << " , " << it->isTaken() << endl;
     }
     output.close();
 }
 
-void writeLGiftstoFile(vector<LuxuryGift> &lGifts)
+void writeLGiftsToFile(vector<LuxuryGift> &lGifts)
 {
     ofstream output;
     output.open("CSV/LuxuryGift.csv");
     vector<LuxuryGift>::iterator it;
     int i = 0;
     for(it = lGifts.begin(); it != lGifts.end(); it++, i++) {
-        output << i+5000 << " , " << it->getPrice() << " , " << it->getValue() << " , " << it->getLuxuryRating() << " , " << it->getLuxuryDifficultyToObtain() << " , " << it->isTaken() << endl;
+        output << it->getIndex() << " , " << it->getPrice() << " , " << it->getValue() << " , " << it->getLuxuryRating() << " , " << it->getLuxuryDifficultyToObtain() << " , " << it->isTaken() << endl;
     }
     output.close();
 }
 
-void writeUGiftstoFile(vector<UtilityGift> &uGifts)
+void writeUGiftsToFile(vector<UtilityGift> &uGifts)
 {
     ofstream output;
     output.open("CSV/UtilityGift.csv");
     vector<UtilityGift>::iterator it;
     int i = 0;
     for(it = uGifts.begin(); it != uGifts.end(); it++, i++) {
-        output << i+6000 << " , " << it->getPrice() << " , " << it->getValue() << " , " << it->getUtilityValue() << " , " << it->getUtilityClass() << " , " << it->isTaken() << endl;
+        output << it->getIndex() << " , " << it->getPrice() << " , " << it->getValue() << " , " << it->getUtilityValue() << " , " << it->getUtilityClass() << " , " << it->isTaken() << endl;
     }
     output.close();
 }

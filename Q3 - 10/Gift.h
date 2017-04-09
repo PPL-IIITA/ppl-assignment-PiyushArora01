@@ -4,7 +4,8 @@
 class Gift
 {
 public:
-    Gift(int price, int value, bool taken);
+    Gift(int index, int price, int value, bool taken);
+    int getIndex();
     int getPrice();
     int getValue();
     bool isTaken();
@@ -13,6 +14,7 @@ public:
     void setTaken(bool taken);
 
 private:
+    int index;
     int price;
     int value;
     bool taken;

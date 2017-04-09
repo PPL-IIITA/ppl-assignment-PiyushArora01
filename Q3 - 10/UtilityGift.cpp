@@ -1,6 +1,6 @@
 #include "UtilityGift.h"
 
-UtilityGift::UtilityGift(int price, int value, bool taken, int utilityValue, int utilityClass) : Gift(price, value, taken)
+UtilityGift::UtilityGift(int index, int price, int value, bool taken, int utilityValue, int utilityClass) : Gift(index, price, value, taken)
 {
     //!Utility Gift constructor
     this->utilityValue = utilityValue;
