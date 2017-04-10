@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-using namespace std;
+#include "Utility.h"
 
 void getBoysList(vector<Boy> &boys)
 {

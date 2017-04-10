@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-using namespace std;
+#include "Q06Utility.h"
 
 void performBreakupLT(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C, int t)
 {

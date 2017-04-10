@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-using namespace std;
+#include "Q05Utility.h"
 
 bool sortMostAttractiveB(Boy &a, Boy &b)
 {

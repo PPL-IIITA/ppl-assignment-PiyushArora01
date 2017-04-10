@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-using namespace std;
+#include "Q08Utility.h"
 
 void computeGifts2(vector<Boy> &B, vector<Girl> &G, vector<Couple> &C, vector<EssentialGift> &EG, vector<LuxuryGift> LG, vector<UtilityGift> UG)
 {

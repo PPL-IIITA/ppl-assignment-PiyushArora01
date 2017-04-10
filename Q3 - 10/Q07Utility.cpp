@@ -1,8 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <cstring>
-using namespace std;
-#define MAX 1000
+#include "Q07Utility.h"
 
 void arrayImp(vector<Couple> &C, vector<Boy> &B, vector<Girl> &G)
 {
