@@ -73,7 +73,8 @@
 
 ## Documentation and Class Diagrams
 
-* Documentation is available `documentation/`
+### Documentation
+* Documentation is available `documentation/html/index.html`
 
 ### Class Diagrams
 
